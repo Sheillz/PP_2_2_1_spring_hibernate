@@ -1,9 +1,14 @@
 package hiber.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@Setter
+@Getter
 public class User {
 
    @Id
@@ -18,6 +23,10 @@ public class User {
 
    @Column(name = "email")
    private String email;
+
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "car_id")
+   private Car car;
 
    public User() {}
    
