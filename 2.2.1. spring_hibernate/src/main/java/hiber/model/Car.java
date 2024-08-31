@@ -1,15 +1,12 @@
 package hiber.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-//Создайте сущность Car с полями String model и int series,
-// на которую будет ссылаться User с помощью связи one-to-one
+
 @Entity
+@Table(name = "cars")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +16,10 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "car")
+    private String model;
+    private int series;
+
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 }

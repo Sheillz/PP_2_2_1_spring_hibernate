@@ -10,30 +10,40 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
-   public static void main(String[] args) throws SQLException {
-      AnnotationConfigApplicationContext context = 
-            new AnnotationConfigApplicationContext(AppConfig.class);
+    public static void main(String[] args) throws SQLException {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(AppConfig.class);
 
-      UserService userService = context.getBean(UserService.class);
+        UserService userService = context.getBean(UserService.class);
 
-//      userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
-//      userService.add(new User("User2", "Lastname2", "user2@mail.ru"));
-//      userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
-//      userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
-//
-//      List<User> users = userService.listUsers();
-//      for (User user : users) {
-//         System.out.println("Id = "+user.getId());
-//         System.out.println("First Name = "+user.getFirstName());
-//         System.out.println("Last Name = "+user.getLastName());
-//         System.out.println("Email = "+user.getEmail());
-//         System.out.println();
-//      }
-      User user = new User("User1", "Lastname1", "user1@mail.ru");
-      Car car = Car.builder()
-              .name("shit").build();
-      user.setCar(car);
-      userService.add(user);
-      context.close();
-   }
+        userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
+        userService.add(new User("User2", "Lastname2", "user2@mail.ru"));
+        userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
+        userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
+
+        List<User> users = userService.listUsers();
+        for (User user : users) {
+            System.out.println("Id = " + user.getId());
+            System.out.println("First Name = " + user.getFirstName());
+            System.out.println("Last Name = " + user.getLastName());
+            System.out.println("Email = " + user.getEmail());
+            System.out.println();
+        }
+
+        User user = User.builder()
+                .firstName("Ivan")
+                .lastName("Baka")
+                .email("baka@mail.ru")
+                .build();
+        Car car = Car.builder()
+                .series(5)
+                .model("Audi w88w")
+                .build();
+        user.setCar(car);
+        userService.add(user);
+
+        user = userService.getUsersByCar("Audi w88w", 5);
+        System.out.println(user);
+        context.close();
+    }
 }
